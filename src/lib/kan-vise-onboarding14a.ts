@@ -18,7 +18,6 @@ export function kanViseOnboarding14A({
     amplitudeData: AmplitudeData;
     featuretoggleData: FeaturetoggleData;
 }): boolean {
-    // const skalSeEksperiment = amplitudeData.eksperimenter.includes('onboarding14a');
     const erAAP = brukerInfoData.rettighetsgruppe === 'AAP';
     const brukerregistreringData = registreringData?.registrering ?? null;
     const featuretoggleAktivert = featuretoggleData && featuretoggleData['veientilarbeid.14a-intro'];
@@ -29,7 +28,6 @@ export function kanViseOnboarding14A({
         featuretoggleAktivert &&
         aldersgruppeUtenForsterketInnsats &&
         !erAAP &&
-        // skalSeEksperiment &&
         sjekkOmBrukerErStandardInnsatsgruppe({ brukerregistreringData, oppfolgingData }) &&
         !oppfolgingData.kanReaktiveres
     );
