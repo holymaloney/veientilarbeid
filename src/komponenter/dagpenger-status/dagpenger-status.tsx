@@ -75,7 +75,6 @@ function DagpengerStatus() {
         (featuretoggleDagpengerStatusAktivert &&
             erKSSBruker({
                 amplitudeData,
-                featuretoggleData,
                 oppfolgingData,
                 brukerInfoData,
                 registreringData,

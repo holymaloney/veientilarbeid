@@ -162,7 +162,6 @@ function Intro14AWrapper(props: IntroProps) {
 
     const skalViseKssKort = erKSSBruker({
         amplitudeData,
-        featuretoggleData,
         oppfolgingData,
         brukerInfoData,
         registreringData,

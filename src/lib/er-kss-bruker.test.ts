@@ -44,21 +44,6 @@ const grunndata = {
     egenvurderingData: {
         sistOppdatert: plussDager(new Date(), -78).toISOString(),
     },
-    featuretoggleData: {
-        'veientilarbeid.modal': false,
-        'veientilarbeid.feedback': false,
-        'veientilarbeid.14a-intro': true,
-        'veientilarbeid.registrert-permittert': false,
-        'veientilarbeid.dagpenger-status': false,
-        'veientilarbeid.dpstatus-for-alle': false,
-        'veientilarbeid.egenvurderinguke12': true,
-        'veientilarbeid.rydding.skjulJobbBoks': false,
-        'veientilarbeid.rydding.skjulOkonomiBoks': false,
-        'veientilarbeid.rydding.skjulAAPRad': false,
-        'veientilarbeid.visbrukerundersokelse': false,
-        'veientilarbeid.onboarding14a.situasjonsbestemt': false,
-        'veientilarbeid.meldekort-intro.situasjonsbestemt': false,
-    },
     amplitudeData: {
         gruppe: poagruppeKSS,
         geografiskTilknytning: 'INGEN_VERDI',
@@ -113,12 +98,6 @@ describe('Tester funksjonen erKSSBruker', () => {
         expect(erKSSBruker(testdata)).toBe(false);
     });
 
-    test('NEI hvis ikke featureToggle', () => {
-        const testdata = JSON.parse(JSON.stringify(grunndata));
-        testdata.featuretoggleData['veientilarbeid.14a-intro'] = false;
-        expect(erKSSBruker(testdata)).toBe(false);
-    });
-
     test('NEI hvis ikke bruker kan reaktveres', () => {
         const testdata = JSON.parse(JSON.stringify(grunndata));
         testdata.oppfolgingData.kanReaktiveres = true;
@@ -131,11 +110,10 @@ describe('Tester funksjonen erKSSBruker', () => {
         expect(erKSSBruker(testdata)).toBe(false);
     });
 
-    test('JA hvis ikke bruker skal se eksperiment, er innefor aldersgruppe, har featuretoggle, ikke kan reaktivers og er standard innsatsgruppe', () => {
+    test('JA hvis ikke bruker skal se eksperiment, er innefor aldersgruppe, ikke kan reaktivers og er standard innsatsgruppe', () => {
         const testdata = JSON.parse(JSON.stringify(grunndata));
         testdata.amplitudeData.eksperimenter = [eksperiment];
         testdata.brukerInfoData.alder = 45;
-        testdata.featuretoggleData['veientilarbeid.14a-intro'] = true;
         testdata.oppfolgingData.kanReaktiveres = false;
         testdata.oppfolgingData.servicegruppe = 'IKVAL';
         testdata.oppfolgingData.formidlingsgruppe = 'ARBS';
