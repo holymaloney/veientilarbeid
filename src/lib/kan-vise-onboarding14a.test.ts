@@ -2,11 +2,9 @@ import { DinSituasjonSvar, FremtidigSituasjonSvar } from '../ducks/brukerregistr
 import { InnloggingsNiva } from '../ducks/autentisering';
 import { plussDager } from '../utils/date-utils';
 import { POAGruppe } from '../utils/get-poa-group';
-import { EksperimentId } from '../eksperiment/eksperimenter';
 import { kanViseOnboarding14A } from './kan-vise-onboarding14a';
 import { Formidlingsgruppe, Servicegruppe } from '../ducks/oppfolging';
 
-const eksperiment: EksperimentId = 'onboarding14a';
 const poagruppeKSS: POAGruppe = 'kss';
 const dpVenter: 'nei' = 'nei';
 
@@ -83,7 +81,6 @@ const grunndata = {
         erSykmeldtMedArbeidsgiver: 'ukjent',
         dinSituasjon: DinSituasjonSvar.INGEN_VERDI,
         reservasjonKRR: 'ukjent',
-        eksperimenter: [eksperiment],
         dagpengerVedleggEttersendes: 0,
         dagpengerSoknadMellomlagret: 0,
         dagpengerSoknadVenterPaSvar: dpVenter,
@@ -98,12 +95,6 @@ describe('Tester funksjonen kanViseOnboarding14A', () => {
     test('Nei hvis AAP', () => {
         const testdata = JSON.parse(JSON.stringify(grunndata));
         testdata.brukerInfoData.rettighetsgruppe = 'AAP';
-        expect(kanViseOnboarding14A(testdata)).toBe(false);
-    });
-
-    test('NEI hvis ikke eksperiment', () => {
-        const testdata = JSON.parse(JSON.stringify(grunndata));
-        testdata.amplitudeData.eksperimenter = [];
         expect(kanViseOnboarding14A(testdata)).toBe(false);
     });
 
@@ -131,9 +122,8 @@ describe('Tester funksjonen kanViseOnboarding14A', () => {
         expect(kanViseOnboarding14A(testdata)).toBe(false);
     });
 
-    test('JA hvis ikke bruker skal se eksperiment, er innefor aldersgruppe, har featuretoggle, ikke kan reaktivers og er standard innsatsgruppe', () => {
+    test('JA hvis ikke bruker er innefor aldersgruppe, har featuretoggle, ikke kan reaktivers og er standard innsatsgruppe', () => {
         const testdata = JSON.parse(JSON.stringify(grunndata));
-        testdata.amplitudeData.eksperimenter = [eksperiment];
         testdata.brukerInfoData.alder = 45;
         testdata.featuretoggleData['veientilarbeid.14a-intro'] = true;
         testdata.oppfolgingData.kanReaktiveres = false;
